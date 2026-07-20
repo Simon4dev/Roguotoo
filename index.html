@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b0a" />
+  <title>Roguotoo — Halls of the Void</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <main class="game-shell">
+    <header class="topbar">
+      <div class="brand"><span>R</span>OGUOTOO <small>// HALLS OF THE VOID</small></div>
+      <div class="room-indicator">ROOM <strong id="room-number">01</strong> <i></i> <span id="room-type">EXPLORATION</span></div>
+      <button id="scores-button" class="icon-button scores-button" aria-label="High scores">★</button>
+      <button id="help-button" class="icon-button" aria-label="Help">?</button>
+    </header>
+
+    <section class="layout">
+      <div class="viewport-wrap">
+        <canvas id="game" width="960" height="640" aria-label="Dungeon map"></canvas>
+        <div id="float-layer" class="float-layer"></div>
+        <div id="start-screen" class="overlay visible">
+          <div class="sigil">&</div>
+          <p id="chronicle-label" class="eyebrow">CHRONICLE I</p>
+          <h1 id="start-title">HALLS<br>OF THE VOID</h1>
+          <p id="start-intro">Every door reshapes the dungeon.<br>Every weapon redefines who you are.</p>
+          <label id="name-label" class="name-prompt" for="hero-name">WANDERER NAME</label>
+          <input id="hero-name" class="hero-name start-name" value="NAMELESS" maxlength="18" spellcheck="false" autocomplete="off" aria-label="Character name" />
+          <span id="controls-label" class="control-label">CONTROLS</span>
+          <div id="control-picker" class="control-picker" role="group" aria-label="Control scheme">
+            <button type="button" data-controls="azerty">ZQSD <small>AZERTY</small></button>
+            <button type="button" data-controls="arrows">↑ ← ↓ → <small>ARROWS</small></button>
+            <button type="button" data-controls="qwerty">WASD <small>QWERTY</small></button>
+          </div>
+          <button id="start-button" class="primary">[ ENTER THE DUNGEON ]</button>
+          <span id="start-control-hint" class="hint">ZQSD · SPACE TO WAIT</span>
+        </div>
+        <div id="modal" class="overlay modal"></div>
+      </div>
+
+      <aside class="sidebar">
+        <section class="hero-card">
+          <div class="hero-title"><div><span id="wanderer-label" class="eyebrow">WANDERER</span><h2 id="hero-name-display">NAMELESS</h2></div><span id="level">LVL. 1</span></div>
+          <div class="resource"><label>HEALTH <b id="hp-text">30 / 30</b></label><div><i id="hp-bar"></i></div></div>
+          <div class="resource xp"><label>XP <b id="xp-text">0 / 20</b></label><div><i id="xp-bar"></i></div></div>
+          <div class="gold-line"><span class="coin">●</span><strong id="gold">0</strong><small> GOLD</small></div>
+        </section>
+
+        <section>
+          <div class="section-head"><h3 id="attributes-label">ATTRIBUTES</h3><span id="points-left">0 PT</span></div>
+          <div id="stats" class="stats"></div>
+          <p class="microcopy">Attributes define your build.<br>Spend points outside combat.</p>
+        </section>
+
+        <section>
+          <div class="section-head"><h3 id="equipment-label">EQUIPMENT</h3><span id="combat-lock"></span></div>
+          <div id="equipped" class="equipped"></div>
+          <div id="inventory" class="inventory"></div>
+        </section>
+
+        <section class="log-section">
+          <div class="section-head"><h3 id="log-label">JOURNAL</h3><button id="sound-button" class="tiny-button">SOUND ◼</button></div>
+          <div id="log" class="log"></div>
+        </section>
+      </aside>
+    </section>
+
+    <footer><span><kbd id="footer-controls">ZQSD</kbd> MOVE</span><span><kbd>CLICK</kbd> EQUIP / STATS</span><span><kbd>R</kbd> RESTART</span><em>THE WALLS ARE LISTENING.</em></footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
