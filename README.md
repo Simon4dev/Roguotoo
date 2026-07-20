@@ -6,6 +6,10 @@ A procedural ASCII roguelike playable directly in the browser.
 
 https://simon4dev.github.io/Roguotoo/
 
+## Screenshot
+
+![Roguotoo gameplay — mysterious chest reward roll](assets/gameplay-chest.png)
+
 ## Run
 
 Open `index.html`, or start a local server:
