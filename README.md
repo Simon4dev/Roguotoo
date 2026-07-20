@@ -2,6 +2,10 @@
 
 A procedural ASCII roguelike playable directly in the browser.
 
+## Play
+
+https://simon4dev.github.io/Roguotoo/
+
 ## Run
 
 Open `index.html`, or start a local server:
