@@ -1,6 +1,6 @@
 # Roguotoo — Halls of the Void
 
-A procedural ASCII roguelike playable directly in the browser.
+An open-source roguelike inspired by Vampire Survivors.
 
 ## Play
 
