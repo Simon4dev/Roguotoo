@@ -22,6 +22,9 @@
   document.addEventListener('click',e=>{if(!e.target.closest('.theme-control'))toggleThemeMenu(false)});
   themeMenu.addEventListener('keydown',e=>{const items=[...themeMenu.querySelectorAll('[data-theme-choice]')],index=items.indexOf(document.activeElement);if(e.key==='Escape'){toggleThemeMenu(false);themeButton.focus()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(index+(e.key==='ArrowDown'?1:-1)+items.length)%items.length].focus()}});
   setTheme(activeTheme,false);
+  document.querySelectorAll('[data-move]').forEach(button=>button.onclick=()=>move(...button.dataset.move.split(',').map(Number)));
+  document.querySelectorAll('[data-wait]').forEach(button=>button.onclick=waitTurn);
+  $('[data-touch-restart]').onclick=restartGame;
   if(localStorage.getItem(STORAGE_NAME)==='SANS-NOM')localStorage.setItem(STORAGE_NAME,'NAMELESS');
   let controlMode=localStorage.getItem(STORAGE_CONTROLS)||'azerty';
   let state, tileW, tileH, ox, oy, raf, slotSession=null, audio=true;
@@ -60,6 +63,8 @@
   function makeEnemy(x,y){const kinds=[['rat','r',5,2],['goblin','g',8,3],['wraith','s',11,4],['ogre','O',17,6]],k=kinds[Math.min(kinds.length-1,Math.floor((state.room+rng(0,4))/5))];return {x,y,name:k[0],glyph:k[1],hp:k[2]+state.room,maxHp:k[2]+state.room,damage:k[3]+Math.floor(state.room/6)};}
   function openAt(x,y){return x>0&&y>0&&x<W&&y<H&&state.map[y]?.[x]==='.';}
   function move(dx,dy){if(!state.running||$('.modal').classList.contains('visible'))return;const p=state.player,nx=p.x+dx,ny=p.y+dy;if(!openAt(nx,ny))return tone(90,.03);const enemy=state.enemies.find(e=>e.x===nx&&e.y===ny);if(enemy){attack(enemy);}else{p.x=nx;p.y=ny;sound.footstep();drinkPotionAt(nx,ny);const opened=openChestAt(nx,ny);enemyTurn();if(!opened&&nx===state.exit.x&&ny===state.exit.y&&state.enemies.length===0)completeRoom();}updateCombat();updateUI();}
+  function waitTurn(){if(!state.running||$('.modal').classList.contains('visible'))return;enemyTurn();updateCombat();updateUI();}
+  function restartGame(){if(state.running&&confirm('Restart this chronicle?'))startGame();}
   function attack(e){const p=state.player,w=p.weapon,s=p.stats[w.stat];let dmg=w.damage+Math.floor(s*1.45)+rng(0,2);if(w.stat==='agilite'&&Math.random()<s*.025)dmg*=2;if(w.stat==='magie')dmg+=Math.floor(p.stats.intelligence*.45);sound.attack();e.hp-=dmg;floatText(e.x,e.y,`-${dmg}`,STAT[w.stat].color);sound.impact();addLog(`${w.name} deals ${dmg} damage to the ${e.name}.`);if(e.hp<=0){state.enemies=state.enemies.filter(x=>x!==e);const gold=rng(2,6)+Math.floor(state.room/2),xp=rng(5,9);p.gold+=gold;gainXp(xp);addLog(`${e.name} slain · +${gold} gold · +${xp} XP`,'good');const drop=rng(1,100);if(drop<=25){state.chests.push({x:e.x,y:e.y});addLog('A mysterious chest drops to the ground!','good')}else if(drop<=39){state.potions.push({x:e.x,y:e.y,heal:rng(7,11)+p.level});addLog(`The ${e.name} drops a health potion!`,'good')}tone(320,.08)}enemyTurn();}
   function drinkPotionAt(x,y){const i=state.potions.findIndex(p=>p.x===x&&p.y===y);if(i<0)return;const potion=state.potions[i],before=state.player.hp;state.player.hp=Math.min(state.player.maxHp,state.player.hp+potion.heal);state.potions.splice(i,1);const healed=state.player.hp-before;floatText(x,y,`+${healed}`,'#ed3f65');addLog(healed?`Health potion consumed · +${healed} HP.`:'Potion consumed, but your health is already full.','good');sound.pickup();}
   function rollChestReward(){const roll=rng(1,100);if(roll<=48)return{type:'gold',amount:rng(8,18)+state.room*2};if(roll<=70)return{type:'heal',amount:rng(4,8)+Math.floor(state.player.level/2)};const stat=pick(Object.keys(STAT));return{type:'stat',stat,name:pick(RELICS[stat])};}

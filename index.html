@@ -32,6 +32,19 @@
       <div class="viewport-wrap">
         <canvas id="game" width="960" height="640" aria-label="Dungeon map"></canvas>
         <div id="float-layer" class="float-layer"></div>
+        <div id="touch-controls" class="touch-controls" aria-label="Game controls">
+          <div class="dpad" role="group" aria-label="Movement">
+            <button type="button" class="dpad-up" data-move="0,-1" aria-label="Move up">↑</button>
+            <button type="button" class="dpad-left" data-move="-1,0" aria-label="Move left">←</button>
+            <button type="button" class="dpad-wait" data-wait aria-label="Wait one turn">·</button>
+            <button type="button" class="dpad-right" data-move="1,0" aria-label="Move right">→</button>
+            <button type="button" class="dpad-down" data-move="0,1" aria-label="Move down">↓</button>
+          </div>
+          <div class="touch-actions">
+            <button type="button" data-wait><b>WAIT</b><small>1 TURN</small></button>
+            <button type="button" data-touch-restart><b>RESTART</b><small>NEW RUN</small></button>
+          </div>
+        </div>
         <div id="start-screen" class="overlay visible">
           <div class="sigil">&</div>
           <p id="chronicle-label" class="eyebrow">CHRONICLE I</p>
