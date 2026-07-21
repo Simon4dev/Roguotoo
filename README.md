@@ -5,6 +5,7 @@ An open-source roguelike inspired by Nethack and Vampire Survivors.
 ## Play
 
 https://simon4dev.github.io/Roguotoo/
+PC/mobile/tablet support
 
 ## Screenshot
 
