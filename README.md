@@ -10,7 +10,7 @@ PC/mobile/tablet support
 
 ## Screenshot
 
-![Roguotoo gameplay — mysterious chest reward roll](assets/gameplay-chest.png)
+![Roguotoo gameplay — exploration and character interface](assets/gameplay-chest.png)
 
 ## Run
 
