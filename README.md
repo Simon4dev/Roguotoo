@@ -1,6 +1,6 @@
 # Roguotoo — Halls of the Void
 
-An open-source roguelike inspired by Vampire Survivors.
+An open-source roguelike inspired by Nethack and Vampire Survivors. 
 
 ## Play
 
