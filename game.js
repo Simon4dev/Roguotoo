@@ -11,7 +11,17 @@
   const NAMES = {force:['Axe','Warhammer','Greatsword'],agilite:['Dagger','Rapier','Bow'],magie:['Staff','Orb','Scepter'],intelligence:['Grimoire','Catalyst','Relic']};
   const GLYPHS={force:'⚒',agilite:'†',magie:'ϟ',intelligence:'⌬'};
   const RELICS={force:['Colossus Ring','Ogre Fang'],agilite:['Raven Feather','Thief Boots'],magie:['Arcane Shard','Star Larva'],intelligence:['Sage Eye','Memory Rune']};
-  const STORAGE_NAME='roguotoo.playerName', STORAGE_SCORES='roguotoo.scores', STORAGE_CONTROLS='roguotoo.controls';
+  const STORAGE_NAME='roguotoo.playerName', STORAGE_SCORES='roguotoo.scores', STORAGE_CONTROLS='roguotoo.controls', STORAGE_THEME='roguotoo.theme';
+  const THEMES=['studio','flash','classic'];
+  let activeTheme=THEMES.includes(localStorage.getItem(STORAGE_THEME))?localStorage.getItem(STORAGE_THEME):'studio';
+  const themeButton=$('#theme-button'),themeMenu=$('#theme-menu');
+  function setTheme(theme,persist=true){activeTheme=THEMES.includes(theme)?theme:'studio';document.documentElement.dataset.theme=activeTheme;if(persist)localStorage.setItem(STORAGE_THEME,activeTheme);document.querySelector('meta[name="theme-color"]')?.setAttribute('content',getComputedStyle(document.documentElement).getPropertyValue('--bg').trim());document.querySelectorAll('[data-theme-choice]').forEach(button=>button.setAttribute('aria-checked',String(button.dataset.themeChoice===activeTheme)));}
+  function toggleThemeMenu(open=!themeMenu.hidden){themeMenu.hidden=!open;themeButton.setAttribute('aria-expanded',String(open));if(open)themeMenu.querySelector('[aria-checked="true"]')?.focus()}
+  themeButton.onclick=e=>{e.stopPropagation();toggleThemeMenu(themeMenu.hidden)};
+  document.querySelectorAll('[data-theme-choice]').forEach(button=>button.onclick=()=>{setTheme(button.dataset.themeChoice);toggleThemeMenu(false);themeButton.focus()});
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-control'))toggleThemeMenu(false)});
+  themeMenu.addEventListener('keydown',e=>{const items=[...themeMenu.querySelectorAll('[data-theme-choice]')],index=items.indexOf(document.activeElement);if(e.key==='Escape'){toggleThemeMenu(false);themeButton.focus()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(index+(e.key==='ArrowDown'?1:-1)+items.length)%items.length].focus()}});
+  setTheme(activeTheme,false);
   if(localStorage.getItem(STORAGE_NAME)==='SANS-NOM')localStorage.setItem(STORAGE_NAME,'NAMELESS');
   let controlMode=localStorage.getItem(STORAGE_CONTROLS)||'azerty';
   let state, tileW, tileH, ox, oy, raf, slotSession=null, audio=true;

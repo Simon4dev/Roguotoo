@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="studio">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,17 @@
     <header class="topbar">
       <div class="brand"><span>R</span>OGUOTOO <small>// HALLS OF THE VOID</small></div>
       <div class="room-indicator">ROOM <strong id="room-number">01</strong> <i></i> <span id="room-type">EXPLORATION</span></div>
+      <div class="theme-control">
+        <button id="theme-button" class="icon-button theme-button" aria-label="Choose theme" aria-haspopup="true" aria-expanded="false" title="Theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-1.1-.9-2-2-2h-1.2a2 2 0 0 1-1.6-3.2l.5-.7A2 2 0 0 0 15.1 3H12Zm-4.5 9.8a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Zm2-4.5a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Zm5 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Zm-7 9a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Z"/></svg>
+        </button>
+        <div id="theme-menu" class="theme-menu" role="menu" aria-label="Color theme" hidden>
+          <span class="theme-menu-title">INTERFACE THEME</span>
+          <button type="button" role="menuitemradio" data-theme-choice="studio"><i class="theme-swatch studio-swatch"></i><span><b>STUDIO</b><small>CYAN // DEFAULT</small></span><em>01</em></button>
+          <button type="button" role="menuitemradio" data-theme-choice="flash"><i class="theme-swatch flash-swatch"></i><span><b>FLASH</b><small>NEON // VIBRANT</small></span><em>02</em></button>
+          <button type="button" role="menuitemradio" data-theme-choice="classic"><i class="theme-swatch classic-swatch"></i><span><b>CLASSIC</b><small>VOID // ORIGINAL</small></span><em>03</em></button>
+        </div>
+      </div>
       <button id="scores-button" class="icon-button scores-button" aria-label="High scores">★</button>
       <button id="help-button" class="icon-button" aria-label="Help">?</button>
     </header>
