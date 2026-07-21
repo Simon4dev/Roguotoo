@@ -22,7 +22,8 @@
   document.addEventListener('click',e=>{if(!e.target.closest('.theme-control'))toggleThemeMenu(false)});
   themeMenu.addEventListener('keydown',e=>{const items=[...themeMenu.querySelectorAll('[data-theme-choice]')],index=items.indexOf(document.activeElement);if(e.key==='Escape'){toggleThemeMenu(false);themeButton.focus()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(index+(e.key==='ArrowDown'?1:-1)+items.length)%items.length].focus()}});
   setTheme(activeTheme,false);
-  document.querySelectorAll('[data-move]').forEach(button=>button.onclick=()=>move(...button.dataset.move.split(',').map(Number)));
+  function bindHoldControl(button,action){let delayTimer=null,repeatTimer=null;const stop=()=>{clearTimeout(delayTimer);clearInterval(repeatTimer);delayTimer=repeatTimer=null;button.classList.remove('holding')};button.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'&&event.button!==0)return;event.preventDefault();stop();button.setPointerCapture?.(event.pointerId);button.classList.add('holding');action();delayTimer=setTimeout(()=>{repeatTimer=setInterval(action,115)},280)});['pointerup','pointercancel','lostpointercapture'].forEach(type=>button.addEventListener(type,stop));button.addEventListener('contextmenu',event=>event.preventDefault());}
+  document.querySelectorAll('[data-move]').forEach(button=>bindHoldControl(button,()=>move(...button.dataset.move.split(',').map(Number))));
   document.querySelectorAll('[data-wait]').forEach(button=>button.onclick=waitTurn);
   $('[data-touch-restart]').onclick=restartGame;
   $('#shop-button').onclick=openShop;
